@@ -1,5 +1,5 @@
 const testButton = document.getElementById("testButton");
 
 testButton.addEventListener("click", () => {
-  alert("Wobbly Checklist funktioniert! 🎉");
+  alert("Wobbly Guide is working! 🎉");
 });
