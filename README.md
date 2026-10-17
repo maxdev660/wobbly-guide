@@ -97,8 +97,10 @@ Wobbly Life and related names, trademarks and content belong to their respective
 
 
 
-🇩🇪 Deutsch
-Über das Projekt
+# 🇩🇪 Deutsch
+
+
+# Über das Projekt
 Wobbly Guide ist ein inoffizielles Fan-Projekt für Wobbly Life.
 Das Ziel von Wobbly Guide ist es, eine übersichtliche zentrale Seite zu erstellen, auf der Spieler Freischaltungen, Aufgaben, Sammelobjekte, Geheimnisse und Schritt-für-Schritt-Guides finden können.
 Spieler sollen außerdem ihren Fortschritt verfolgen und erledigte Freischaltungen abhaken können.
@@ -121,7 +123,7 @@ Funktionen
 - 🇩🇪 Deutsch
 - 🇬🇧 Englisch
 - 💻 Windows-App
-Sprachen
+# Sprachen
 Wobbly Guide unterstützt:
 - 🇩🇪 Deutsch
 - 🇬🇧 Englisch
@@ -138,12 +140,16 @@ Beispiel:
 ☐ Geheimes Outfit freischalten
 
 Erledigte Einträge zählen zum gesamten Fortschritt.
-Accounts
+
+
+# Accounts
 Eine Anmeldung mit Google ist geplant.
 Mit einem Account soll der Fortschritt zwischen verschiedenen Geräten synchronisiert werden können.
 Die Website soll trotzdem auch ohne Account funktionieren.
 Der Fortschritt von Gästen wird lokal im Browser gespeichert.
-Windows-App
+
+
+# Windows-App
 Zusätzlich zur Website ist eine Windows-Version von Wobbly Guide geplant.
 Website und Windows-App sollen dieselben:
 - Guides
@@ -153,7 +159,9 @@ Website und Windows-App sollen dieselben:
 - Spracheinstellungen
 verwenden.
 Für die Windows-App ist außerdem Offline-Unterstützung geplant.
-Technologie
+
+
+# Technologie
 Aktuell verwendet:
 - HTML
 - CSS
@@ -165,7 +173,9 @@ Später geplant:
 - Firebase Authentication
 - Firestore
 - Tauri
-Status
+
+- 
+# Status
 Wobbly Guide befindet sich aktuell in Entwicklung.
 Weitere Freischaltungen, Guides und Funktionen werden nach und nach ergänzt.
 Hinweis
