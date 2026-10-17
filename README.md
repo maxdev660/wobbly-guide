@@ -93,6 +93,10 @@ Disclaimer
 Wobbly Guide is an unofficial fan project.
 This project is not affiliated with, operated by or endorsed by RubberBandGames.
 Wobbly Life and related names, trademarks and content belong to their respective owners.
+
+
+
+
 🇩🇪 Deutsch
 Über das Projekt
 Wobbly Guide ist ein inoffizielles Fan-Projekt für Wobbly Life.
