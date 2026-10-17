@@ -1,1248 +1,2385 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<title>Wobbly Guide</title>
 
-  <meta
-    id="metaDescription"
-    name="description"
-    content="Wobbly Guide – Alle Freischaltungen, Aufgaben und Guides für Wobbly Life."
-  >
+<style>
+/* =========================================================
+   WOBBLY GUIDE — DESIGN PROTOTYPE
+   ========================================================= */
 
-  <meta
-    name="theme-color"
-    content="#79d7ff"
-  >
+:root {
+    --sky: #77d7ff;
+    --sky-dark: #45bde8;
+    --yellow: #ffd447;
+    --yellow-dark: #e4ad20;
+    --blue: #2e87d3;
+    --blue-dark: #195b94;
+    --navy: #173c59;
+    --green: #72d469;
+    --green-dark: #3da94f;
+    --white: #ffffff;
+    --cream: #fffdf4;
+    --soft: #edfaff;
+    --gray: #7290a4;
 
-  <title>Wobbly Guide</title>
+    --shadow:
+        0 8px 0 rgba(22, 83, 116, .15),
+        0 16px 30px rgba(26, 95, 135, .16);
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+    --shadow-small:
+        0 5px 0 rgba(22, 83, 116, .15),
+        0 9px 18px rgba(26, 95, 135, .13);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    color: var(--navy);
+    background:
+        radial-gradient(
+            circle at 8% 5%,
+            rgba(255,255,255,.8) 0 2%,
+            transparent 2.2%
+        ),
+        radial-gradient(
+            circle at 86% 12%,
+            rgba(255,255,255,.7) 0 3%,
+            transparent 3.2%
+        ),
+        linear-gradient(
+            180deg,
+            #73d3fb 0%,
+            #bcecff 42%,
+            #e8fbff 100%
+        );
+    min-height: 100vh;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+/* =========================================================
+   DECORATION
+   ========================================================= */
+
+.cloud {
+    position: fixed;
+    z-index: -1;
+    width: 190px;
+    height: 65px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.5);
+    filter: blur(.1px);
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 80px;
+    height: 80px;
+    left: 25px;
+    top: -28px;
+}
+
+.cloud::after {
+    width: 95px;
+    height: 95px;
+    right: 25px;
+    top: -40px;
+}
+
+.cloud-one {
+    top: 130px;
+    left: -40px;
+}
+
+.cloud-two {
+    top: 260px;
+    right: -50px;
+    transform: scale(.7);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header-wrap {
+    padding: 18px 22px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header {
+    max-width: 1280px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 13px 16px 13px 20px;
+
+    border: 3px solid rgba(255,255,255,.85);
+    border-radius: 28px;
+
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(16px);
+
+    box-shadow: var(--shadow-small);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    text-decoration: none;
+    color: var(--navy);
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 27px;
+
+    background: var(--yellow);
+    border: 3px solid white;
+    border-radius: 17px;
+
+    transform: rotate(-4deg);
+
+    box-shadow:
+        0 5px 0 var(--yellow-dark),
+        0 8px 16px rgba(0,0,0,.12);
+}
+
+.logo-text {
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -.7px;
+}
+
+.desktop-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-button {
+    border: 0;
+    padding: 11px 15px;
+    border-radius: 16px;
+
+    background: transparent;
+    color: var(--navy);
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        background .18s ease;
+}
+
+.nav-button:hover {
+    background: #eaf8ff;
+    transform: translateY(-2px);
+}
+
+.nav-button.active {
+    background: var(--yellow);
+    box-shadow: 0 4px 0 var(--yellow-dark);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.language {
+    display: flex;
+    padding: 4px;
+
+    border-radius: 15px;
+    background: #eaf6fb;
+}
+
+.language button {
+    border: 0;
+    padding: 8px 10px;
+    border-radius: 11px;
+
+    background: transparent;
+    color: var(--gray);
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.language button.active {
+    color: var(--navy);
+    background: white;
+    box-shadow: 0 3px 8px rgba(20,80,110,.12);
+}
+
+.account-button {
+    width: 42px;
+    height: 42px;
+
+    border: 0;
+    border-radius: 15px;
+
+    background: var(--blue);
+    color: white;
+
+    font-size: 19px;
+
+    box-shadow: 0 4px 0 var(--blue-dark);
+
+    cursor: pointer;
+
+    transition: transform .15s ease;
+}
+
+.account-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--blue-dark);
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.page {
+    max-width: 1280px;
+    margin: auto;
+    padding: 42px 22px 80px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+    gap: 24px;
+}
+
+.hero-main,
+.hero-progress {
+    border: 4px solid rgba(255,255,255,.9);
+    border-radius: 35px;
+
+    box-shadow: var(--shadow);
+}
+
+.hero-main {
+    position: relative;
+    overflow: hidden;
+
+    padding: 40px;
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255,255,255,.38),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #55c8f4,
+            #86ddff
+        );
+}
+
+.hero-main::after {
+    content: "★";
+    position: absolute;
+    right: 28px;
+    bottom: -30px;
+
+    font-size: 150px;
+    color: rgba(255,255,255,.15);
+
+    transform: rotate(12deg);
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 13px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.83);
+
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.hero h1 {
+    margin: 20px 0 10px;
+
+    max-width: 720px;
+
+    font-size: clamp(48px, 7vw, 82px);
+    line-height: .95;
+    letter-spacing: -4px;
+
+    color: white;
+
+    text-shadow:
+        0 5px 0 rgba(19,104,150,.28),
+        0 10px 24px rgba(16,103,148,.2);
+}
+
+.hero-description {
+    max-width: 620px;
+
+    margin: 0 0 28px;
+
+    color: #145274;
+
+    font-size: 18px;
+    line-height: 1.55;
+    font-weight: 700;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.game-button {
+    border: 3px solid white;
+
+    padding: 14px 20px;
+
+    border-radius: 19px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s cubic-bezier(.2,.9,.3,1.4),
+        box-shadow .18s ease;
+}
+
+.game-button:hover {
+    transform: translateY(-3px) scale(1.025);
+}
+
+.game-button:active {
+    transform: translateY(3px) scale(.98);
+}
+
+.primary-button {
+    color: var(--navy);
+    background: var(--yellow);
+
+    box-shadow:
+        0 6px 0 var(--yellow-dark),
+        0 12px 18px rgba(62,94,20,.12);
+}
+
+.primary-button:active {
+    box-shadow:
+        0 2px 0 var(--yellow-dark);
+}
+
+.secondary-button {
+    color: var(--navy);
+    background: white;
+
+    box-shadow:
+        0 6px 0 #c9e5ef;
+}
+
+.hero-progress {
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.96),
+            rgba(246,253,255,.96)
+        );
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-title {
+    align-self: stretch;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+    font-weight: 900;
+}
+
+.progress-ring {
+    width: 190px;
+    height: 190px;
+
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        conic-gradient(
+            var(--yellow) 0 64%,
+            #dbeef5 64% 100%
+        );
+
+    position: relative;
+
+    animation: popIn .6s ease;
+}
+
+.progress-ring::after {
+    content: "";
+
+    width: 145px;
+    height: 145px;
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow: inset 0 4px 12px rgba(30,90,120,.07);
+}
+
+.progress-value {
+    position: relative;
+    z-index: 1;
+
+    text-align: center;
+}
+
+.progress-value strong {
+    display: block;
+    font-size: 44px;
+    line-height: 1;
+}
+
+.progress-value span {
+    color: var(--gray);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.progress-caption {
+    margin-top: 20px;
+
+    text-align: center;
+    color: var(--gray);
+    font-weight: 800;
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.section {
+    margin-top: 38px;
+}
+
+.section-top {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 18px;
+}
+
+.section-top h2 {
+    margin: 0;
+
+    font-size: 30px;
+    letter-spacing: -1px;
+}
+
+.section-top p {
+    margin: 5px 0 0;
+
+    color: #52788f;
+    font-weight: 700;
+}
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+}
+
+.category-card {
+    border: 3px solid white;
+    border-radius: 25px;
+
+    padding: 19px;
+
+    background: rgba(255,255,255,.87);
+
+    box-shadow: var(--shadow-small);
+
+    cursor: pointer;
+
+    transition:
+        transform .2s cubic-bezier(.2,.9,.3,1.3),
+        box-shadow .2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-6px) rotate(-.6deg);
+
+    box-shadow:
+        0 10px 0 rgba(22,83,116,.12),
+        0 20px 28px rgba(26,95,135,.17);
+}
+
+.category-icon {
+    width: 50px;
+    height: 50px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 13px;
+
+    border-radius: 17px;
+
+    background: #e8f8ff;
+
+    font-size: 27px;
+}
+
+.category-card h3 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.category-number {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--gray);
+}
+
+.mini-progress {
+    height: 9px;
+
+    margin-top: 13px;
+
+    overflow: hidden;
+
+    border-radius: 99px;
+    background: #dceef5;
+}
+
+.mini-progress div {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        90deg,
+        var(--yellow),
+        #ffe889
+    );
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    padding: 15px;
+
+    border: 3px solid white;
+    border-radius: 25px;
+
+    background: rgba(255,255,255,.84);
+
+    box-shadow: var(--shadow-small);
+}
+
+.search-box {
+    flex: 1;
+    min-width: 240px;
+
+    position: relative;
+}
+
+.search-box span {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+.search-box input {
+    width: 100%;
+
+    border: 0;
+    outline: none;
+
+    padding: 14px 15px 14px 45px;
+
+    border-radius: 16px;
+
+    color: var(--navy);
+    background: #edf8fc;
+
+    font-weight: 700;
+}
+
+.filter-row {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.filter {
+    border: 0;
+    padding: 10px 13px;
+
+    border-radius: 13px;
+
+    background: #eaf5fa;
+    color: #54748a;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.filter.active {
+    color: var(--navy);
+    background: var(--yellow);
+}
+
+/* =========================================================
+   UNLOCK CARDS
+   ========================================================= */
+
+.unlock-list {
+    display: grid;
+    gap: 15px;
+
+    margin-top: 16px;
+}
+
+.unlock-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
+
+    padding: 17px;
+
+    border: 3px solid white;
+    border-radius: 25px;
+
+    background: rgba(255,255,255,.92);
+
+    box-shadow: var(--shadow-small);
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.unlock-card:hover {
+    transform: translateY(-3px);
+}
+
+.unlock-card.completed {
+    opacity: .67;
+    background: #effff0;
+}
+
+.unlock-card.completed .unlock-name {
+    text-decoration: line-through;
+}
+
+.check {
+    width: 52px;
+    height: 52px;
+
+    display: grid;
+    place-items: center;
+
+    border: 3px solid #cae2ec;
+    border-radius: 17px;
+
+    background: #eff8fb;
+
+    cursor: pointer;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    color: transparent;
+
+    transition:
+        transform .15s ease,
+        background .15s ease;
+}
+
+.check:hover {
+    transform: scale(1.06);
+}
+
+.unlock-card.completed .check {
+    color: white;
+
+    border-color: white;
+    background: var(--green);
+
+    box-shadow: 0 4px 0 var(--green-dark);
+}
+
+.unlock-name {
+    margin: 0 0 5px;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.unlock-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--gray);
+}
+
+.pill {
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: #eaf7fc;
+}
+
+.guide-button {
+    border: 0;
+
+    padding: 12px 15px;
+
+    border-radius: 15px;
+
+    color: white;
+    background: var(--blue);
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 0 var(--blue-dark);
+
+    transition: transform .15s ease;
+}
+
+.guide-button:active {
+    transform: translateY(3px);
+
+    box-shadow: 0 1px 0 var(--blue-dark);
+}
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.disclaimer {
+    margin-top: 45px;
+
+    padding: 20px 23px;
+
+    border: 3px solid rgba(255,255,255,.9);
+    border-radius: 23px;
+
+    color: #557489;
+    background: rgba(255,255,255,.65);
+
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: none;
+    place-items: center;
+
+    padding: 25px;
+
+    background: rgba(12,43,61,.5);
+    backdrop-filter: blur(8px);
+}
+
+.modal-backdrop.open {
+    display: grid;
+}
+
+.modal {
+    width: min(630px, 100%);
+
+    max-height: 85vh;
+    overflow-y: auto;
+
+    padding: 26px;
+
+    border: 4px solid white;
+    border-radius: 30px;
+
+    background: var(--cream);
+
+    box-shadow:
+        0 15px 0 rgba(19,67,94,.15),
+        0 30px 60px rgba(0,0,0,.24);
+
+    animation: modalIn .28s cubic-bezier(.2,.9,.3,1.2);
+}
+
+.modal-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close-button {
+    width: 42px;
+    height: 42px;
+
+    border: 0;
+    border-radius: 14px;
+
+    background: #e9f3f7;
+    color: var(--navy);
+
+    font-size: 20px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.guide-step {
+    margin-top: 14px;
+
+    padding: 15px;
+
+    border-radius: 17px;
+
+    background: white;
+    box-shadow: 0 3px 10px rgba(20,80,110,.08);
+}
+
+.guide-step strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+.mobile-nav {
+    display: none;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes popIn {
+    from {
+        transform: scale(.85) rotate(-5deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes modalIn {
+    from {
+        transform: translateY(25px) scale(.94);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        padding-bottom: 80px;
+    }
+
+    .header-wrap {
+        padding: 10px 12px 0;
+    }
+
+    .header {
+        border-radius: 22px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+    }
+
+    .account-button {
+        display: none;
+    }
+
+    .page {
+        padding:
+            24px 12px
+            40px;
+    }
+
+    .hero-main {
+        padding: 27px 22px;
+    }
+
+    .hero h1 {
+        font-size: 49px;
+        letter-spacing: -3px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-card {
+        padding: 15px;
+    }
+
+    .unlock-card {
+        grid-template-columns: auto 1fr;
+    }
+
+    .guide-button {
+        grid-column: 1 / -1;
+    }
+
+    .mobile-nav {
+        position: fixed;
+        z-index: 500;
+
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+
+        padding: 7px;
+
+        border: 3px solid white;
+        border-radius: 23px;
+
+        background: rgba(255,255,255,.92);
+        backdrop-filter: blur(18px);
+
+        box-shadow:
+            0 8px 25px rgba(10,60,90,.2);
+    }
+
+    .mobile-nav button {
+        border: 0;
+
+        padding: 9px 3px;
+
+        border-radius: 14px;
+
+        background: transparent;
+
+        font-size: 20px;
+    }
+
+    .mobile-nav button.active {
+        background: var(--yellow);
+    }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- ========================================= -->
-  <!-- HEADER                                    -->
-  <!-- ========================================= -->
+<div class="cloud cloud-one"></div>
+<div class="cloud cloud-two"></div>
 
-  <header class="site-header">
+<!-- HEADER -->
 
-    <div class="header-inner">
+<div class="header-wrap">
+<header class="header">
 
-      <a
-        href="#home"
-        class="brand"
-        aria-label="Wobbly Guide"
-      >
-        <span class="brand-icon">
-          ⭐
-        </span>
+<a class="logo" href="#">
+    <div class="logo-icon">⭐</div>
+    <div class="logo-text">Wobbly Guide</div>
+</a>
 
-        <span class="brand-text">
-          Wobbly Guide
-        </span>
-      </a>
+<nav class="desktop-nav">
+    <button class="nav-button active" data-i18n="navHome">
+        Start
+    </button>
+
+    <button class="nav-button" data-i18n="navUnlocks">
+        Freischaltungen
+    </button>
+
+    <button class="nav-button" data-i18n="navGuides">
+        Guides
+    </button>
+
+    <button class="nav-button" data-i18n="navProgress">
+        Fortschritt
+    </button>
+</nav>
+
+<div class="header-actions">
+
+<div class="language">
+    <button id="deButton">DE</button>
+    <button id="enButton">EN</button>
+</div>
+
+<button class="account-button">
+    👤
+</button>
+
+</div>
+
+</header>
+</div>
 
 
-      <nav class="main-nav">
+<!-- PAGE -->
 
-        <a
-          href="#home"
-          data-i18n="navHome"
-        >
-          Startseite
-        </a>
+<main class="page">
 
-        <a
-          href="#features"
-          data-i18n="navFeatures"
-        >
-          Funktionen
-        </a>
+<!-- HERO -->
 
-        <a
-          href="#about"
-          data-i18n="navAbout"
-        >
-          Über das Projekt
-        </a>
+<section class="hero">
 
-      </nav>
+<div class="hero-main">
+
+<span
+    class="tag"
+    data-i18n="prototype"
+>
+    🎮 Design-Prototyp
+</span>
+
+<h1>
+    Wobbly<br>
+    Guide
+</h1>
+
+<p
+    class="hero-description"
+    data-i18n="heroText"
+>
+    Alle Freischaltungen, Geheimnisse und Guides
+    für deine Reise durch Wobbly Life.
+</p>
+
+<div class="hero-actions">
+
+<button
+    class="game-button primary-button"
+    data-i18n="continueButton"
+>
+    ▶ Weitermachen
+</button>
+
+<button
+    class="game-button secondary-button"
+    data-i18n="allUnlocksButton"
+>
+    Alle Freischaltungen
+</button>
+
+</div>
+
+</div>
 
 
-      <!-- LANGUAGE SWITCH -->
+<div class="hero-progress">
 
-      <div
-        class="language-switcher"
-        aria-label="Language selector"
-      >
+<div class="progress-title">
 
-        <button
-          type="button"
-          class="language-button"
-          data-lang="de"
-          aria-label="Deutsch auswählen"
-        >
-          🇩🇪 DE
-        </button>
+<span data-i18n="totalProgress">
+    Gesamtfortschritt
+</span>
 
-        <button
-          type="button"
-          class="language-button"
-          data-lang="en"
-          aria-label="Select English"
-        >
-          🇬🇧 EN
-        </button>
+<span>✨</span>
 
-      </div>
+</div>
 
+<div class="progress-ring">
+
+<div class="progress-value">
+    <strong id="progressPercent">
+        64%
+    </strong>
+
+    <span
+        id="progressCount"
+        data-i18n="progressCount"
+    >
+        7 / 11 erledigt
+    </span>
+</div>
+
+</div>
+
+<div
+    class="progress-caption"
+    data-i18n="progressCaption"
+>
+    Noch ein bisschen bis 100 %!
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="section">
+
+<div class="section-top">
+
+<div>
+<h2 data-i18n="categoriesTitle">
+    Kategorien
+</h2>
+
+<p data-i18n="categoriesSubtitle">
+    Was möchtest du als Nächstes erledigen?
+</p>
+</div>
+
+</div>
+
+
+<div class="category-grid">
+
+<div class="category-card">
+    <div class="category-icon">🚗</div>
+    <h3 data-i18n="vehicles">Fahrzeuge</h3>
+    <div class="category-number">18 / 24</div>
+
+    <div class="mini-progress">
+        <div style="width:75%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">👕</div>
+    <h3 data-i18n="clothes">Kleidung</h3>
+    <div class="category-number">32 / 51</div>
+
+    <div class="mini-progress">
+        <div style="width:63%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🐶</div>
+    <h3 data-i18n="pets">Haustiere</h3>
+    <div class="category-number">22 / 34</div>
+
+    <div class="mini-progress">
+        <div style="width:65%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🎁</div>
+    <h3 data-i18n="gifts">Geschenke</h3>
+    <div class="category-number">86 / 120</div>
+
+    <div class="mini-progress">
+        <div style="width:72%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🏛️</div>
+    <h3 data-i18n="museum">Museum</h3>
+    <div class="category-number">8 / 13</div>
+
+    <div class="mini-progress">
+        <div style="width:61%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🔐</div>
+    <h3 data-i18n="secrets">Geheimnisse</h3>
+    <div class="category-number">14 / 26</div>
+
+    <div class="mini-progress">
+        <div style="width:54%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🧩</div>
+    <h3 data-i18n="tasks">Aufgaben</h3>
+    <div class="category-number">21 / 30</div>
+
+    <div class="mini-progress">
+        <div style="width:70%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🏁</div>
+    <h3 data-i18n="races">Rennen</h3>
+    <div class="category-number">9 / 14</div>
+
+    <div class="mini-progress">
+        <div style="width:64%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🚀</div>
+    <h3 data-i18n="space">Weltraum</h3>
+    <div class="category-number">17 / 31</div>
+
+    <div class="mini-progress">
+        <div style="width:55%"></div>
+    </div>
+</div>
+
+<div class="category-card">
+    <div class="category-icon">🎉</div>
+    <h3 data-i18n="events">Events</h3>
+    <div class="category-number">6 / 12</div>
+
+    <div class="mini-progress">
+        <div style="width:50%"></div>
+    </div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- UNLOCKS -->
+
+<section class="section">
+
+<div class="section-top">
+
+<div>
+<h2 data-i18n="unlockTitle">
+    Freischaltungen
+</h2>
+
+<p data-i18n="unlockSubtitle">
+    Beispielansicht für die spätere komplette Datenbank.
+</p>
+</div>
+
+</div>
+
+
+<div class="toolbar">
+
+<div class="search-box">
+    <span>🔎</span>
+
+    <input
+        id="searchInput"
+        type="text"
+        placeholder="Freischaltungen suchen..."
+    >
+</div>
+
+<div class="filter-row">
+
+<button
+    class="filter active"
+    data-filter="all"
+    data-i18n="filterAll"
+>
+    Alle
+</button>
+
+<button
+    class="filter"
+    data-filter="open"
+    data-i18n="filterOpen"
+>
+    Offen
+</button>
+
+<button
+    class="filter"
+    data-filter="completed"
+    data-i18n="filterDone"
+>
+    Erledigt
+</button>
+
+</div>
+
+</div>
+
+
+<div class="unlock-list" id="unlockList">
+
+<!-- Card -->
+
+<article
+    class="unlock-card completed"
+    data-search="flying car fliegendes auto museum vehicle fahrzeug"
+>
+
+<button
+    class="check"
+    aria-label="Toggle completion"
+>
+    ✓
+</button>
+
+<div>
+    <div
+        class="unlock-name"
+        data-i18n="flyingCar"
+    >
+        Fliegendes Auto
     </div>
 
-  </header>
-
-
-
-  <!-- ========================================= -->
-  <!-- MAIN                                      -->
-  <!-- ========================================= -->
-
-  <main>
-
-    <!-- HERO -->
-
-    <section
-      id="home"
-      class="hero"
-    >
-
-      <div class="hero-content">
-
-        <div
-          class="hero-badge"
-          data-i18n="heroBadge"
+    <div class="unlock-meta">
+        <span
+            class="pill"
+            data-i18n="vehicle"
         >
-          🚧 Aktuell in Entwicklung
-        </div>
-
-
-        <h1>
-          Wobbly Guide
-        </h1>
-
-
-        <p
-          class="hero-subtitle"
-          data-i18n="heroSubtitle"
-        >
-          Dein kompletter Guide für Freischaltungen,
-          Aufgaben und Geheimnisse in Wobbly Life.
-        </p>
-
-
-        <div class="hero-buttons">
-
-          <a
-            href="#features"
-            class="button button-primary"
-            data-i18n="exploreButton"
-          >
-            Guide entdecken
-          </a>
-
-
-          <a
-            href="#about"
-            class="button button-secondary"
-            data-i18n="learnMoreButton"
-          >
-            Mehr erfahren
-          </a>
-
-        </div>
-
-
-        <p
-          class="hero-note"
-          data-i18n="heroNote"
-        >
-          Die vollständige Checkliste wird gerade aufgebaut.
-        </p>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ========================================= -->
-    <!-- FEATURES                                  -->
-    <!-- ========================================= -->
-
-    <section
-      id="features"
-      class="section"
-    >
-
-      <div class="section-container">
-
-        <div class="section-heading">
-
-          <span
-            class="section-label"
-            data-i18n="featuresLabel"
-          >
-            Funktionen
-          </span>
-
-
-          <h2
-            data-i18n="featuresTitle"
-          >
-            Alles, was du für 100 % brauchst
-          </h2>
-
-
-          <p
-            data-i18n="featuresDescription"
-          >
-            Wobbly Guide soll alle wichtigen Freischaltungen,
-            Aufgaben und Schritt-für-Schritt-Guides an einem Ort sammeln.
-          </p>
-
-        </div>
-
-
-
-        <div class="feature-grid">
-
-          <!-- FEATURE 1 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              ✅
-            </div>
-
-            <h3
-              data-i18n="featureChecklistTitle"
-            >
-              Fortschritts-Checkliste
-            </h3>
-
-            <p
-              data-i18n="featureChecklistDescription"
-            >
-              Markiere erledigte Aufgaben und behalte deinen
-              Fortschritt im Blick.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 2 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              📖
-            </div>
-
-            <h3
-              data-i18n="featureGuidesTitle"
-            >
-              Schritt-für-Schritt-Guides
-            </h3>
-
-            <p
-              data-i18n="featureGuidesDescription"
-            >
-              Klare Anleitungen für Freischaltungen,
-              Aufgaben und Geheimnisse.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 3 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🚗
-            </div>
-
-            <h3
-              data-i18n="featureVehiclesTitle"
-            >
-              Fahrzeuge
-            </h3>
-
-            <p
-              data-i18n="featureVehiclesDescription"
-            >
-              Finde heraus, wie du besondere Fahrzeuge
-              und andere Fortbewegungsmittel freischaltest.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 4 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              👕
-            </div>
-
-            <h3
-              data-i18n="featureClothesTitle"
-            >
-              Kleidung
-            </h3>
-
-            <p
-              data-i18n="featureClothesDescription"
-            >
-              Entdecke Outfits, Hüte und andere
-              freischaltbare Kleidungsstücke.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 5 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🐶
-            </div>
-
-            <h3
-              data-i18n="featurePetsTitle"
-            >
-              Haustiere
-            </h3>
-
-            <p
-              data-i18n="featurePetsDescription"
-            >
-              Guides für versteckte und besondere Haustiere.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 6 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🏛️
-            </div>
-
-            <h3
-              data-i18n="featureMuseumTitle"
-            >
-              Museum
-            </h3>
-
-            <p
-              data-i18n="featureMuseumDescription"
-            >
-              Hilfe beim Finden von Artefakten und
-              beim Abschließen der Sammlungen.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 7 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🎁
-            </div>
-
-            <h3
-              data-i18n="featureGiftsTitle"
-            >
-              Geschenke
-            </h3>
-
-            <p
-              data-i18n="featureGiftsDescription"
-            >
-              Behalte gefundene Geschenke im Blick
-              und finde fehlende Sammelobjekte.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 8 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🚀
-            </div>
-
-            <h3
-              data-i18n="featureSpaceTitle"
-            >
-              Weltraum
-            </h3>
-
-            <p
-              data-i18n="featureSpaceDescription"
-            >
-              Aufgaben, Geheimnisse und Freischaltungen
-              aus dem Weltraum-Bereich.
-            </p>
-
-          </article>
-
-
-
-          <!-- FEATURE 9 -->
-
-          <article class="feature-card">
-
-            <div class="feature-icon">
-              🔐
-            </div>
-
-            <h3
-              data-i18n="featureSecretsTitle"
-            >
-              Geheimnisse
-            </h3>
-
-            <p
-              data-i18n="featureSecretsDescription"
-            >
-              Versteckte Aufgaben, Easter Eggs
-              und geheime Belohnungen.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ========================================= -->
-    <!-- PROGRESS PREVIEW                          -->
-    <!-- ========================================= -->
-
-    <section class="section progress-preview">
-
-      <div class="section-container">
-
-        <div class="progress-card">
-
-          <div class="progress-card-text">
-
-            <span
-              class="section-label"
-              data-i18n="progressLabel"
-            >
-              Demnächst
-            </span>
-
-
-            <h2
-              data-i18n="progressTitle"
-            >
-              Dein persönlicher Fortschritt
-            </h2>
-
-
-            <p
-              data-i18n="progressDescription"
-            >
-              Später kannst du jede Aufgabe abhaken,
-              deinen Gesamtfortschritt sehen und deine
-              Daten mit deinem Account synchronisieren.
-            </p>
-
-          </div>
-
-
-          <div class="progress-example">
-
-            <div class="progress-number">
-              0%
-            </div>
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-bar-fill"
-                style="width: 0%;"
-              ></div>
-
-            </div>
-
-
-            <span
-              data-i18n="progressExample"
-            >
-              Noch nichts erledigt
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ========================================= -->
-    <!-- ABOUT                                     -->
-    <!-- ========================================= -->
-
-    <section
-      id="about"
-      class="section"
-    >
-
-      <div class="section-container">
-
-        <div class="about-card">
-
-          <span
-            class="section-label"
-            data-i18n="aboutLabel"
-          >
-            Über das Projekt
-          </span>
-
-
-          <h2
-            data-i18n="aboutTitle"
-          >
-            Eine Community-Hilfe für Wobbly Life
-          </h2>
-
-
-          <p
-            data-i18n="aboutDescription"
-          >
-            Wobbly Guide ist ein unabhängiges Fan-Projekt.
-            Ziel ist es, eine übersichtliche und leicht
-            verständliche Sammlung von Freischaltungen,
-            Aufgaben und Guides aufzubauen.
-          </p>
-
-
-          <p
-            class="fan-disclaimer"
-            data-i18n="fanDisclaimer"
-          >
-            Wobbly Guide ist kein offizielles Produkt von
-            RubberBandGames und steht nicht in Verbindung
-            mit den Entwicklern von Wobbly Life.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ========================================= -->
-    <!-- DEVELOPMENT STATUS                        -->
-    <!-- ========================================= -->
-
-    <section class="section development-section">
-
-      <div class="section-container">
-
-        <div class="development-card">
-
-          <div class="development-icon">
-            🛠️
-          </div>
-
-
-          <div>
-
-            <h2
-              data-i18n="developmentTitle"
-            >
-              Die Website wird gerade gebaut
-            </h2>
-
-
-            <p
-              data-i18n="developmentDescription"
-            >
-              Weitere Funktionen, Guides, Freischaltungen
-              und die vollständige Checkliste folgen.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- ========================================= -->
-  <!-- FOOTER                                    -->
-  <!-- ========================================= -->
-
-  <footer class="site-footer">
-
-    <div class="footer-inner">
-
-      <div>
-
-        <strong>
-          Wobbly Guide
-        </strong>
-
-        <p
-          data-i18n="footerDescription"
-        >
-          Ein inoffizielles Fan-Projekt für Wobbly Life.
-        </p>
-
-      </div>
-
-
-      <div class="footer-right">
-
-        <span id="footerYear"></span>
-
-        <span>
-          •
+            Fahrzeug
         </span>
 
         <span
-          data-i18n="footerRights"
+            class="pill"
+            data-i18n="museum"
         >
-          Fan-Projekt
+            Museum
         </span>
 
-      </div>
+        <span
+            class="pill"
+            data-i18n="difficultyHard"
+        >
+            Schwer
+        </span>
+    </div>
+</div>
 
+<button
+    class="guide-button"
+    data-guide="flying"
+    data-i18n="openGuide"
+>
+    Guide öffnen
+</button>
+
+</article>
+
+
+<!-- Card -->
+
+<article
+    class="unlock-card"
+    data-search="dinosaur pet dinosaurier haustier stumpy"
+>
+
+<button
+    class="check"
+    aria-label="Toggle completion"
+>
+    ✓
+</button>
+
+<div>
+    <div
+        class="unlock-name"
+        data-i18n="dinoPet"
+    >
+        Dinosaurier-Haustier
     </div>
 
-  </footer>
+    <div class="unlock-meta">
+        <span
+            class="pill"
+            data-i18n="pet"
+        >
+            Haustier
+        </span>
+
+        <span class="pill">
+            🦖
+        </span>
+
+        <span
+            class="pill"
+            data-i18n="difficultyMedium"
+        >
+            Mittel
+        </span>
+    </div>
+</div>
+
+<button
+    class="guide-button"
+    data-guide="dino"
+    data-i18n="openGuide"
+>
+    Guide öffnen
+</button>
+
+</article>
+
+
+<!-- Card -->
+
+<article
+    class="unlock-card"
+    data-search="wizard ship zauberer schiff space weltraum"
+>
+
+<button
+    class="check"
+    aria-label="Toggle completion"
+>
+    ✓
+</button>
+
+<div>
+    <div
+        class="unlock-name"
+        data-i18n="wizardShip"
+    >
+        Zauberer-Schiff
+    </div>
+
+    <div class="unlock-meta">
+        <span
+            class="pill"
+            data-i18n="spaceship"
+        >
+            Raumschiff
+        </span>
+
+        <span
+            class="pill"
+            data-i18n="space"
+        >
+            Weltraum
+        </span>
+
+        <span
+            class="pill"
+            data-i18n="difficultyHard"
+        >
+            Schwer
+        </span>
+    </div>
+</div>
+
+<button
+    class="guide-button"
+    data-guide="wizard"
+    data-i18n="openGuide"
+>
+    Guide öffnen
+</button>
+
+</article>
+
+</div>
+
+</section>
+
+
+<div
+    class="disclaimer"
+    data-i18n="disclaimer"
+>
+    Wobbly Guide ist ein inoffizielles Fan-Projekt und
+    nicht mit RubberBandGames verbunden.
+</div>
+
+</main>
 
 
+<!-- MOBILE NAV -->
 
-  <!-- ========================================= -->
-  <!-- LANGUAGE SYSTEM                            -->
-  <!-- ========================================= -->
+<nav class="mobile-nav">
 
-  <script>
+<button class="active">
+    🏠
+</button>
 
-    /*
-      Wobbly Guide Language System
-      --------------------------------
-      First visit:
-      - German system/browser -> German
-      - Everything else -> English
+<button>
+    ✅
+</button>
 
-      Later visits:
-      - Saved user choice is used
-    */
+<button>
+    🔎
+</button>
 
+<button>
+    🎁
+</button>
 
-    const translations = {
+<button>
+    👤
+</button>
 
-      de: {
+</nav>
 
-        pageTitle:
-          "Wobbly Guide – Alle Freischaltungen & Guides",
 
-        metaDescription:
-          "Wobbly Guide – Alle Freischaltungen, Aufgaben und Guides für Wobbly Life.",
+<!-- GUIDE MODAL -->
 
+<div
+    id="guideModal"
+    class="modal-backdrop"
+>
 
-        navHome:
-          "Startseite",
+<div class="modal">
 
-        navFeatures:
-          "Funktionen",
+<div class="modal-header">
 
-        navAbout:
-          "Über das Projekt",
+<div>
+    <div
+        class="tag"
+        data-i18n="guideLabel"
+    >
+        📖 Guide
+    </div>
 
+    <h2
+        id="modalTitle"
+        style="margin-top:12px"
+    >
+        Flying Car
+    </h2>
+</div>
 
-        heroBadge:
-          "🚧 Aktuell in Entwicklung",
+<button
+    id="closeModal"
+    class="close-button"
+>
+    ×
+</button>
 
-        heroSubtitle:
-          "Dein kompletter Guide für Freischaltungen, Aufgaben und Geheimnisse in Wobbly Life.",
+</div>
 
-        exploreButton:
-          "Guide entdecken",
 
-        learnMoreButton:
-          "Mehr erfahren",
+<div
+    id="modalContent"
+    style="margin-top:20px"
+>
 
-        heroNote:
-          "Die vollständige Checkliste wird gerade aufgebaut.",
+</div>
 
+</div>
 
-        featuresLabel:
-          "Funktionen",
+</div>
 
-        featuresTitle:
-          "Alles, was du für 100 % brauchst",
 
-        featuresDescription:
-          "Wobbly Guide soll alle wichtigen Freischaltungen, Aufgaben und Schritt-für-Schritt-Guides an einem Ort sammeln.",
+<script>
+/* =========================================================
+   LANGUAGE SYSTEM
+   ========================================================= */
 
+const translations = {
 
-        featureChecklistTitle:
-          "Fortschritts-Checkliste",
+de: {
+    navHome: "Start",
+    navUnlocks: "Freischaltungen",
+    navGuides: "Guides",
+    navProgress: "Fortschritt",
 
-        featureChecklistDescription:
-          "Markiere erledigte Aufgaben und behalte deinen Fortschritt im Blick.",
+    prototype: "🎮 Design-Prototyp",
 
+    heroText:
+        "Alle Freischaltungen, Geheimnisse und Guides für deine Reise durch Wobbly Life.",
 
-        featureGuidesTitle:
-          "Schritt-für-Schritt-Guides",
+    continueButton:
+        "▶ Weitermachen",
 
-        featureGuidesDescription:
-          "Klare Anleitungen für Freischaltungen, Aufgaben und Geheimnisse.",
+    allUnlocksButton:
+        "Alle Freischaltungen",
 
+    totalProgress:
+        "Gesamtfortschritt",
 
-        featureVehiclesTitle:
-          "Fahrzeuge",
+    progressCount:
+        "7 / 11 erledigt",
 
-        featureVehiclesDescription:
-          "Finde heraus, wie du besondere Fahrzeuge und andere Fortbewegungsmittel freischaltest.",
+    progressCaption:
+        "Noch ein bisschen bis 100 %!",
 
+    categoriesTitle:
+        "Kategorien",
 
-        featureClothesTitle:
-          "Kleidung",
+    categoriesSubtitle:
+        "Was möchtest du als Nächstes erledigen?",
 
-        featureClothesDescription:
-          "Entdecke Outfits, Hüte und andere freischaltbare Kleidungsstücke.",
+    vehicles: "Fahrzeuge",
+    clothes: "Kleidung",
+    pets: "Haustiere",
+    gifts: "Geschenke",
+    museum: "Museum",
+    secrets: "Geheimnisse",
+    tasks: "Aufgaben",
+    races: "Rennen",
+    space: "Weltraum",
+    events: "Events",
 
+    unlockTitle:
+        "Freischaltungen",
 
-        featurePetsTitle:
-          "Haustiere",
+    unlockSubtitle:
+        "Beispielansicht für die spätere komplette Datenbank.",
 
-        featurePetsDescription:
-          "Guides für versteckte und besondere Haustiere.",
+    filterAll:
+        "Alle",
 
+    filterOpen:
+        "Offen",
 
-        featureMuseumTitle:
-          "Museum",
+    filterDone:
+        "Erledigt",
 
-        featureMuseumDescription:
-          "Hilfe beim Finden von Artefakten und beim Abschließen der Sammlungen.",
+    flyingCar:
+        "Fliegendes Auto",
 
+    dinoPet:
+        "Dinosaurier-Haustier",
 
-        featureGiftsTitle:
-          "Geschenke",
+    wizardShip:
+        "Zauberer-Schiff",
 
-        featureGiftsDescription:
-          "Behalte gefundene Geschenke im Blick und finde fehlende Sammelobjekte.",
+    vehicle:
+        "Fahrzeug",
 
+    pet:
+        "Haustier",
 
-        featureSpaceTitle:
-          "Weltraum",
+    spaceship:
+        "Raumschiff",
 
-        featureSpaceDescription:
-          "Aufgaben, Geheimnisse und Freischaltungen aus dem Weltraum-Bereich.",
+    difficultyHard:
+        "Schwer",
 
+    difficultyMedium:
+        "Mittel",
 
-        featureSecretsTitle:
-          "Geheimnisse",
+    openGuide:
+        "Guide öffnen",
 
-        featureSecretsDescription:
-          "Versteckte Aufgaben, Easter Eggs und geheime Belohnungen.",
+    guideLabel:
+        "📖 Guide",
 
+    disclaimer:
+        "Wobbly Guide ist ein inoffizielles Fan-Projekt und nicht mit RubberBandGames verbunden.",
 
-        progressLabel:
-          "Demnächst",
+    searchPlaceholder:
+        "Freischaltungen suchen..."
+},
 
-        progressTitle:
-          "Dein persönlicher Fortschritt",
+en: {
+    navHome: "Home",
+    navUnlocks: "Unlocks",
+    navGuides: "Guides",
+    navProgress: "Progress",
 
-        progressDescription:
-          "Später kannst du jede Aufgabe abhaken, deinen Gesamtfortschritt sehen und deine Daten mit deinem Account synchronisieren.",
+    prototype: "🎮 Design prototype",
 
-        progressExample:
-          "Noch nichts erledigt",
+    heroText:
+        "All unlocks, secrets and guides for your journey through Wobbly Life.",
 
+    continueButton:
+        "▶ Continue",
 
-        aboutLabel:
-          "Über das Projekt",
+    allUnlocksButton:
+        "All unlocks",
 
-        aboutTitle:
-          "Eine Community-Hilfe für Wobbly Life",
+    totalProgress:
+        "Overall progress",
 
-        aboutDescription:
-          "Wobbly Guide ist ein unabhängiges Fan-Projekt. Ziel ist es, eine übersichtliche und leicht verständliche Sammlung von Freischaltungen, Aufgaben und Guides aufzubauen.",
+    progressCount:
+        "7 / 11 completed",
 
-        fanDisclaimer:
-          "Wobbly Guide ist kein offizielles Produkt von RubberBandGames und steht nicht in Verbindung mit den Entwicklern von Wobbly Life.",
+    progressCaption:
+        "Getting closer to 100%!",
 
+    categoriesTitle:
+        "Categories",
 
-        developmentTitle:
-          "Die Website wird gerade gebaut",
+    categoriesSubtitle:
+        "What do you want to complete next?",
 
-        developmentDescription:
-          "Weitere Funktionen, Guides, Freischaltungen und die vollständige Checkliste folgen.",
+    vehicles: "Vehicles",
+    clothes: "Clothing",
+    pets: "Pets",
+    gifts: "Gifts",
+    museum: "Museum",
+    secrets: "Secrets",
+    tasks: "Tasks",
+    races: "Races",
+    space: "Space",
+    events: "Events",
 
+    unlockTitle:
+        "Unlocks",
 
-        footerDescription:
-          "Ein inoffizielles Fan-Projekt für Wobbly Life.",
+    unlockSubtitle:
+        "Example view for the future complete database.",
 
-        footerRights:
-          "Fan-Projekt"
+    filterAll:
+        "All",
 
-      },
+    filterOpen:
+        "Incomplete",
 
+    filterDone:
+        "Completed",
 
-      en: {
+    flyingCar:
+        "Flying Car",
 
-        pageTitle:
-          "Wobbly Guide – All Unlocks & Guides",
+    dinoPet:
+        "Dinosaur Pet",
 
-        metaDescription:
-          "Wobbly Guide – All unlocks, tasks and guides for Wobbly Life.",
+    wizardShip:
+        "Wizard's Ship",
 
+    vehicle:
+        "Vehicle",
 
-        navHome:
-          "Home",
+    pet:
+        "Pet",
 
-        navFeatures:
-          "Features",
+    spaceship:
+        "Spaceship",
 
-        navAbout:
-          "About",
+    difficultyHard:
+        "Hard",
 
+    difficultyMedium:
+        "Medium",
 
-        heroBadge:
-          "🚧 Currently in development",
+    openGuide:
+        "Open guide",
 
-        heroSubtitle:
-          "Your complete guide to unlocks, tasks and secrets in Wobbly Life.",
+    guideLabel:
+        "📖 Guide",
 
-        exploreButton:
-          "Explore the guide",
+    disclaimer:
+        "Wobbly Guide is an unofficial fan project and is not affiliated with RubberBandGames.",
 
-        learnMoreButton:
-          "Learn more",
+    searchPlaceholder:
+        "Search unlocks..."
+}
 
-        heroNote:
-          "The complete checklist is currently being built.",
+};
 
 
-        featuresLabel:
-          "Features",
+/* =========================================================
+   LANGUAGE
+   ========================================================= */
 
-        featuresTitle:
-          "Everything you need for 100% completion",
+let currentLanguage =
+    localStorage.getItem("wg-language");
 
-        featuresDescription:
-          "Wobbly Guide aims to collect all important unlocks, tasks and step-by-step guides in one place.",
+if (!currentLanguage) {
 
-
-        featureChecklistTitle:
-          "Progress checklist",
-
-        featureChecklistDescription:
-          "Mark completed tasks and keep track of your progress.",
-
-
-        featureGuidesTitle:
-          "Step-by-step guides",
-
-        featureGuidesDescription:
-          "Clear instructions for unlocks, tasks and secrets.",
-
-
-        featureVehiclesTitle:
-          "Vehicles",
-
-        featureVehiclesDescription:
-          "Learn how to unlock special vehicles and other ways to get around.",
-
-
-        featureClothesTitle:
-          "Clothing",
-
-        featureClothesDescription:
-          "Discover outfits, hats and other unlockable clothing items.",
-
-
-        featurePetsTitle:
-          "Pets",
-
-        featurePetsDescription:
-          "Guides for hidden and special pets.",
-
-
-        featureMuseumTitle:
-          "Museum",
-
-        featureMuseumDescription:
-          "Get help finding artifacts and completing collections.",
-
-
-        featureGiftsTitle:
-          "Gifts",
-
-        featureGiftsDescription:
-          "Keep track of collected gifts and find the ones you are missing.",
-
-
-        featureSpaceTitle:
-          "Space",
-
-        featureSpaceDescription:
-          "Tasks, secrets and unlocks from the space area.",
-
-
-        featureSecretsTitle:
-          "Secrets",
-
-        featureSecretsDescription:
-          "Hidden tasks, Easter eggs and secret rewards.",
-
-
-        progressLabel:
-          "Coming soon",
-
-        progressTitle:
-          "Your personal progress",
-
-        progressDescription:
-          "Later, you will be able to check off every task, see your total progress and sync your data with your account.",
-
-        progressExample:
-          "Nothing completed yet",
-
-
-        aboutLabel:
-          "About the project",
-
-        aboutTitle:
-          "A community resource for Wobbly Life",
-
-        aboutDescription:
-          "Wobbly Guide is an independent fan project. The goal is to create a clear and easy-to-understand collection of unlocks, tasks and guides.",
-
-        fanDisclaimer:
-          "Wobbly Guide is not an official RubberBandGames product and is not affiliated with the developers of Wobbly Life.",
-
-
-        developmentTitle:
-          "The website is currently being built",
-
-        developmentDescription:
-          "More features, guides, unlocks and the complete checklist are coming soon.",
-
-
-        footerDescription:
-          "An unofficial fan project for Wobbly Life.",
-
-        footerRights:
-          "Fan project"
-
-      }
-
-    };
-
-
-
-    /*
-      ---------------------------------------
-      LANGUAGE DETECTION
-      ---------------------------------------
-    */
-
-    function getSystemLanguage() {
-
-      const browserLanguages =
-        navigator.languages &&
-        navigator.languages.length > 0
-          ? navigator.languages
-          : [navigator.language];
-
-
-      const hasGerman =
-        browserLanguages.some(language =>
-          language.toLowerCase().startsWith("de")
-        );
-
-
-      return hasGerman
+    currentLanguage =
+        navigator.language
+            .toLowerCase()
+            .startsWith("de")
         ? "de"
         : "en";
 
-    }
+}
 
+function applyLanguage(language) {
 
+    currentLanguage = language;
 
-    /*
-      ---------------------------------------
-      GET SAVED LANGUAGE
-      ---------------------------------------
-    */
-
-    function getPreferredLanguage() {
-
-      const savedLanguage =
-        localStorage.getItem(
-          "wobbly-guide-language"
-        );
-
-
-      if (
-        savedLanguage === "de" ||
-        savedLanguage === "en"
-      ) {
-
-        return savedLanguage;
-
-      }
-
-
-      return getSystemLanguage();
-
-    }
-
-
-
-    /*
-      ---------------------------------------
-      APPLY LANGUAGE
-      ---------------------------------------
-    */
-
-    function setLanguage(language) {
-
-      const dictionary =
-        translations[language];
-
-
-      if (!dictionary) {
-        return;
-      }
-
-
-      /*
-        Save choice
-      */
-
-      localStorage.setItem(
-        "wobbly-guide-language",
+    localStorage.setItem(
+        "wg-language",
         language
-      );
+    );
 
-
-      /*
-        HTML language attribute
-      */
-
-      document.documentElement.lang =
+    document.documentElement.lang =
         language;
 
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element => {
 
-      /*
-        Page title
-      */
+            const key =
+                element.dataset.i18n;
 
-      document.title =
-        dictionary.pageTitle;
+            if (
+                translations[language][key]
+            ) {
+
+                element.textContent =
+                    translations[language][key];
+
+            }
+
+        });
 
 
-      /*
-        Meta description
-      */
+    document
+        .getElementById("searchInput")
+        .placeholder =
+            translations[language]
+                .searchPlaceholder;
 
-      const metaDescription =
-        document.getElementById(
-          "metaDescription"
+
+    document
+        .getElementById("deButton")
+        .classList.toggle(
+            "active",
+            language === "de"
         );
 
 
-      if (metaDescription) {
-
-        metaDescription.setAttribute(
-          "content",
-          dictionary.metaDescription
+    document
+        .getElementById("enButton")
+        .classList.toggle(
+            "active",
+            language === "en"
         );
 
-      }
+}
 
 
-      /*
-        Translate page content
-      */
-
-      const elements =
-        document.querySelectorAll(
-          "[data-i18n]"
-        );
-
-
-      elements.forEach(element => {
-
-        const key =
-          element.dataset.i18n;
-
-
-        if (dictionary[key]) {
-
-          element.textContent =
-            dictionary[key];
-
-        }
-
-      });
-
-
-
-      /*
-        Update language buttons
-      */
-
-      const buttons =
-        document.querySelectorAll(
-          ".language-button"
-        );
-
-
-      buttons.forEach(button => {
-
-        const isActive =
-          button.dataset.lang === language;
-
-
-        button.classList.toggle(
-          "active",
-          isActive
-        );
-
-
-        button.setAttribute(
-          "aria-pressed",
-          isActive
-            ? "true"
-            : "false"
-        );
-
-      });
-
-    }
-
-
-
-    /*
-      ---------------------------------------
-      LANGUAGE BUTTONS
-      ---------------------------------------
-    */
-
-    const languageButtons =
-      document.querySelectorAll(
-        ".language-button"
-      );
-
-
-    languageButtons.forEach(button => {
-
-      button.addEventListener(
+document
+    .getElementById("deButton")
+    .addEventListener(
         "click",
-        () => {
-
-          const selectedLanguage =
-            button.dataset.lang;
+        () => applyLanguage("de")
+    );
 
 
-          setLanguage(
-            selectedLanguage
-          );
+document
+    .getElementById("enButton")
+    .addEventListener(
+        "click",
+        () => applyLanguage("en")
+    );
 
-        }
-      );
+
+applyLanguage(currentLanguage);
+
+
+/* =========================================================
+   COMPLETION
+   ========================================================= */
+
+document
+    .querySelectorAll(".check")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const card =
+                    button.closest(
+                        ".unlock-card"
+                    );
+
+                card.classList.toggle(
+                    "completed"
+                );
+
+                saveDemoProgress();
+
+            }
+        );
 
     });
 
 
+function saveDemoProgress() {
 
-    /*
-      ---------------------------------------
-      FOOTER YEAR
-      ---------------------------------------
-    */
+    const states =
+        [...document.querySelectorAll(
+            ".unlock-card"
+        )]
+        .map(card =>
+            card.classList.contains(
+                "completed"
+            )
+        );
 
-    const footerYear =
-      document.getElementById(
-        "footerYear"
-      );
+    localStorage.setItem(
+        "wg-demo-progress",
+        JSON.stringify(states)
+    );
+
+}
 
 
-    if (footerYear) {
+function loadDemoProgress() {
 
-      footerYear.textContent =
-        new Date().getFullYear();
+    const saved =
+        localStorage.getItem(
+            "wg-demo-progress"
+        );
+
+    if (!saved) return;
+
+    try {
+
+        const states =
+            JSON.parse(saved);
+
+        document
+            .querySelectorAll(
+                ".unlock-card"
+            )
+            .forEach(
+                (card, index) => {
+
+                    card.classList.toggle(
+                        "completed",
+                        Boolean(
+                            states[index]
+                        )
+                    );
+
+                }
+            );
 
     }
 
+    catch {}
+
+}
 
 
-    /*
-      ---------------------------------------
-      START WEBSITE
-      ---------------------------------------
-    */
-
-    const initialLanguage =
-      getPreferredLanguage();
+loadDemoProgress();
 
 
-    setLanguage(
-      initialLanguage
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
     );
 
-  </script>
+
+searchInput.addEventListener(
+    "input",
+    () => {
+
+        const value =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+        document
+            .querySelectorAll(
+                ".unlock-card"
+            )
+            .forEach(card => {
+
+                const text =
+                    (
+                        card.dataset.search +
+                        " " +
+                        card.textContent
+                    )
+                    .toLowerCase();
+
+                card.style.display =
+                    text.includes(value)
+                    ? ""
+                    : "none";
+
+            });
+
+    }
+);
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".filter"
+                    )
+                    .forEach(item =>
+                        item.classList
+                            .remove("active")
+                    );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                const filter =
+                    button.dataset.filter;
+
+
+                document
+                    .querySelectorAll(
+                        ".unlock-card"
+                    )
+                    .forEach(card => {
+
+                        const completed =
+                            card.classList
+                                .contains(
+                                    "completed"
+                                );
+
+
+                        let visible = true;
+
+
+                        if (
+                            filter === "open"
+                        ) {
+
+                            visible =
+                                !completed;
+
+                        }
+
+
+                        if (
+                            filter ===
+                            "completed"
+                        ) {
+
+                            visible =
+                                completed;
+
+                        }
+
+
+                        card.style.display =
+                            visible
+                            ? ""
+                            : "none";
+
+                    });
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   GUIDE MODAL
+   ========================================================= */
+
+const modal =
+    document.getElementById(
+        "guideModal"
+    );
+
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
+
+const modalContent =
+    document.getElementById(
+        "modalContent"
+    );
+
+
+const guideData = {
+
+flying: {
+    de: {
+        title: "Fliegendes Auto",
+        steps: [
+            "Schließe die Museum-Sammlungen ab.",
+            "Bringe die benötigten Artefakte zum Museum.",
+            "Hole anschließend die Abschlussbelohnung ab."
+        ]
+    },
+
+    en: {
+        title: "Flying Car",
+        steps: [
+            "Complete the museum collections.",
+            "Bring the required artifacts to the museum.",
+            "Claim the final reward afterwards."
+        ]
+    }
+},
+
+dino: {
+    de: {
+        title: "Dinosaurier-Haustier",
+        steps: [
+            "Finde die zugehörige Dinosaurier-Aufgabe.",
+            "Erfülle die benötigten Schritte.",
+            "Hole das Haustier als Belohnung ab."
+        ]
+    },
+
+    en: {
+        title: "Dinosaur Pet",
+        steps: [
+            "Find the related dinosaur task.",
+            "Complete the required steps.",
+            "Claim the pet reward."
+        ]
+    }
+},
+
+wizard: {
+    de: {
+        title: "Zauberer-Schiff",
+        steps: [
+            "Erkunde den Weltraum-Bereich.",
+            "Sammle die benötigten Space-Geschenke.",
+            "Schalte anschließend das Schiff frei."
+        ]
+    },
+
+    en: {
+        title: "Wizard's Ship",
+        steps: [
+            "Explore the space area.",
+            "Collect the required space gifts.",
+            "Unlock the ship afterwards."
+        ]
+    }
+}
+
+};
+
+
+document
+    .querySelectorAll(
+        ".guide-button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const guide =
+                    guideData[
+                        button.dataset.guide
+                    ][currentLanguage];
+
+
+                modalTitle.textContent =
+                    guide.title;
+
+
+                modalContent.innerHTML =
+                    guide.steps
+                        .map(
+                            (step, index) => `
+                            <div class="guide-step">
+                                <strong>
+                                    ${
+                                        currentLanguage === "de"
+                                        ? "Schritt"
+                                        : "Step"
+                                    }
+                                    ${index + 1}
+                                </strong>
+
+                                ${step}
+                            </div>
+                        `
+                        )
+                        .join("");
+
+
+                modal.classList.add(
+                    "open"
+                );
+
+            }
+        );
+
+    });
+
+
+document
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        () =>
+            modal.classList.remove(
+                "open"
+            )
+    );
+
+
+modal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target === modal
+        ) {
+
+            modal.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
 </html>
